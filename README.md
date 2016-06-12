@@ -6,5 +6,11 @@
 
 To run voter sim from your terminal:
 ```
-git clone
+git clone https://github.com/serenastater/voter_sans_sim.git
 ```
+CD into the file:
+```
+cd voter_sans_sim
+```
+
+Have fun!
