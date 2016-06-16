@@ -1,23 +1,36 @@
 # Class for politicians.............................................
+class Politician
+  attr_accessor :name, :party
+  def initialize name, party
+    @name = name
+    @party = party
+  end
+end
+
+# Class for voters..................................................
+class Voter
+  attr_accessor :name, :party
+  def initialize name, party
+    @name = name
+    @party = party
+  end
+end
+
+# Class for politicians.............................................
 require "./voter_classes.rb"
 
 # Arrays for storing instances.......................................
 @list_of_politicians = []
 @list_of_voters = []
 
-# Error method......................................................
-def error
-  puts "Incorrect response. Please choose again!"
-end
-
 # Method to start game..............................................
 def menu
-  puts "Welcome to the voter database. What would you like to do?"
-  puts "(C)reate, (L)ist, (U)pdate, or (D)elete?"
-  answer = gets.chomp.downcase
-  case answer
+  puts "You've made it to the the voter database! Would you like to"
+  puts "(C)reate, (L)ist, (U)pdate, or (D)elete a voter or politician?"
+  response = gets.chomp.downcase
+  case response
   when "c" then create_either
-  when "l" then list
+  when "l" then list_menu
   when "u" then update_either
   when "d" then delete_either
   else
@@ -29,8 +42,8 @@ end
 # Create method....................................................
 def create_either
   puts "Would you like to create a (P)olitician or (V)oter?"
-  answer = gets.chomp.downcase
-  case answer
+  response = gets.chomp.downcase
+  case response
   when "p" then create_politician
   when "v" then create_voter
   else
@@ -56,23 +69,23 @@ end
 def political_party
   puts "What is the politician's party affiliation?"
   puts "(D)emocrat or (R)epublican?"
-  party = gets.chomp.downcase
-  case party
+  response = gets.chomp.downcase
+  case response
   when "d" then politician = Politician.new @politician, "democrat"
-      add_politician(politician)
-    when "r" then politician = Politician.new @politician, "republican"
-      add_politician(politician)
-    else
-      error
-      political_party
+    add_politician(politician)
+  when "r" then politician = Politician.new @politician, "republican"
+    add_politician(politician)
+  else
+    error
+    political_party
   end
 end
 
 # Method to create another politician...............................
 def create_another_politician
   puts "Would you like to create another Politician? (Y) or (N)?"
-  answer = gets.chomp.downcase
-  case answer
+  response = gets.chomp.downcase
+  case response
   when "y" then create_politician
   when "n" then menu
   else
@@ -88,12 +101,18 @@ def create_voter
  voter_party
 end
 
+#Method for adding voters..........................................
+def add_voter(voter)
+  @list_of_voters << [voter.name, voter.party]
+  create_another_voter
+end
+
 # Method for establishing voter affiliation........................
 def voter_party
  puts "What is the voter's party affiliation?"
  puts "(L)iberal, (C)onservative, (T)ea Party, (S)ocialist, or (N)eutral?"
- party = gets.chomp.downcase
-  case party
+ response = gets.chomp.downcase
+  case response
   when "l" then voter = Voter.new @voter, "liberal"
     add_voter(voter)
   when "c" then voter = Voter.new @voter, "conservative"
@@ -111,17 +130,11 @@ def voter_party
   menu
 end
 
-#Method for adding voters..........................................
-def add_voter(voter)
-  @list_of_voters << [voter.name, voter.party]
-  create_another_voter
-end
-
 # Method to create additional voters.................................
 def create_another_voter
   puts "Would you like to create another voter? (Y) or (N)?"
-  answer = gets.chomp.downcase
-  case answer
+  response = gets.chomp.downcase
+  case response
   when "y" then create_voter
   when "n" then menu
   else
@@ -130,8 +143,8 @@ def create_another_voter
   end
 end
 
-# List method.......................................................
-def list
+# List method that returns to menu..................................
+def list_menu
   puts "Politicians:"
     @list_of_politicians.each {|i| puts "#{i[0]}, #{i[1]}"}
   puts "Voters:"
@@ -139,7 +152,7 @@ def list
   menu
 end
 
-# List method that does not return to main_menu.......................
+# List method that does not return to menu.......................
 def list_refer
   puts "Politicians:"
     @list_of_politicians.each {|i| puts "#{i[0]}, #{i[1]}"}
@@ -186,8 +199,8 @@ end
 def update_politician_party
   @list_of_politicians.each do |i|
   puts "Would you like to update the politician's party? (Y) or (N)?"
-  answer = gets.chomp.downcase
-    if answer == "y"
+  response = gets.chomp.downcase
+    if response == "y"
       puts "Is the new party (R)epublican or (D)emocrat?"
       new_party = gets.chomp.downcase
       case new_party
@@ -201,7 +214,7 @@ def update_politician_party
         error
         update_politician_party
       end
-    elsif answer == "n"
+    elsif response == "n"
       menu
     else
       error
@@ -231,8 +244,8 @@ end
 def update_voter_aff
   @list_of_voters.each do |i|
     puts "Would you like to update the voter's affiliation?"
-    answer = gets.chomp.downcase
-    if answer == "y"
+    response = gets.chomp.downcase
+    if response == "y"
       puts "What is the voter's new affiliation?"
       puts "(L)iberal, (C)onservative, (T)ea Party, (S)ocialist, or (N)eutral?"
       new_aff = gets.chomp.downcase
@@ -256,7 +269,7 @@ def update_voter_aff
         error
         update_voter_aff
       end
-    elsif answer == "n"; menu
+    elsif response == "n"; menu
     else
       error
       update_voter_aff
@@ -312,6 +325,11 @@ def delete_voter
   end
     error
     delete_voter
+end
+
+# Error method......................................................
+def error
+  puts "Incorrect response. Please choose again!"
 end
 
 menu
