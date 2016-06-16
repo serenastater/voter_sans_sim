@@ -16,9 +16,6 @@ class Voter
   end
 end
 
-# Class for politicians.............................................
-require "./voter_classes.rb"
-
 # Arrays for storing instances.......................................
 @list_of_politicians = []
 @list_of_voters = []
