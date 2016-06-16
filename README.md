@@ -14,6 +14,11 @@ CD into the file:
 ```
 cd voter_sans_sim
 ```
+Run the voter sim file:
+```
+ruby voter_sim2.rb
+```
+Have fun!
 
 
 
